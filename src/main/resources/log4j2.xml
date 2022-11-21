@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration monitorInterval="30">
+    <Properties>
+        <Property name="component-name">stream-step-executor</Property>
+        <Property name="active-profile">$\${sys:spring.profiles.active.top-level:-local}</Property>
+        <Property name="layout-pattern">%d{yyyy-MM-dd HH:mm:ss,SSS} [%t] %-5level %c{10} - %msg%n</Property>
+        <Property name="console-layout-pattern">%highlight{${layout-pattern}}{STYLE=Logback}</Property>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout>
+                <Pattern>${console-layout-pattern}</Pattern>
+            </PatternLayout>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="com.zaxxer.hikari" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <Logger name="org.drad" level="DEBUG" additivity="false" includeLocation="true">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+        </Root>
+
+    </Loggers>
+</Configuration>

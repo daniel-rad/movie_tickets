@@ -1,0 +1,98 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Movie tickets
+  contact:
+    email: daniel.ionut.rad@gmail.com
+paths:
+  /v1/pricing/transaction:
+    put:
+      summary: Computes the cost of a transaction
+      operationId: computeTransactionCost
+      tags:
+        - transactions
+      requestBody:
+        description: Transaction object for which to compute the cost
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransactionRequest"
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionResponse"
+        '422':
+          description: Invalid input
+components:
+  schemas:
+    TransactionRequest:
+      type: object
+      required:
+        - transactionId
+        - customers
+      properties:
+        transactionId:
+          type: integer
+          format: int32
+        customers:
+          type: array
+          items:
+            $ref: "#/components/schemas/Customer"
+    Customer:
+      type: object
+      required:
+        - name
+        - age
+      properties:
+        name:
+          type: string
+        age:
+          type: integer
+          format: int32
+    TransactionResponse:
+      type: object
+      required:
+        - transactionId
+        - tickets
+        - totalCost
+      properties:
+        transactionId:
+          type: integer
+          format: int32
+        tickets:
+          type: array
+          items:
+            $ref: "#/components/schemas/Ticket"
+        totalCost:
+          type: number
+          format: double
+    Ticket:
+      type: object
+      required:
+      - ticketType
+      - quantity
+      - totalCost
+      properties:
+        ticketType:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+        totalCost:
+          type: number
+          format: double
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

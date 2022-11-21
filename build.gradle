@@ -1,0 +1,114 @@
+plugins {
+    id 'java'
+    id "idea"
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
+    id "org.openapi.generator" version "6.2.1"
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+configurations {
+    all*.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+}
+
+dependencies {
+
+    // spring boot dependencies
+    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+    implementation "org.springframework.boot:spring-boot-starter-validation"
+    implementation "org.springframework.boot:spring-boot-starter-cache"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-logging"
+    implementation "org.springframework.boot:spring-boot-starter-log4j2"
+
+    implementation "mysql:mysql-connector-java:${mySqlVersion}"
+    implementation 'com.h2database:h2:2.1.214'
+
+    // lombok
+    implementation "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    // mapstruct
+    implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+
+    // swagger
+    implementation "io.springfox:springfox-boot-starter:${swaggerVersion}"
+    implementation "io.springfox:springfox-swagger2:${swaggerVersion}"
+    implementation "io.springfox:springfox-swagger-ui:${swaggerVersion}"
+
+    // other dependencies
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation 'com.google.guava:guava:31.1-jre'
+
+//    implementation 'org.openapitools:jackson-databind-nullable:0.2.4'
+
+
+    //test dependencies
+    testImplementation 'org.hamcrest:hamcrest:2.2'
+    testImplementation 'org.glassfish.jersey.bundles:jaxrs-ri:3.1.0'
+
+    //tests
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude group: "org.junit.vintage"
+        exclude group: "org.mockito"
+        exclude group: "org.powermock"
+        exclude group: "com.vaadin.external.google", module: "android-json"
+    }
+    testImplementation 'org.mockito:mockito-junit-jupiter:4.9.0'
+}
+
+jar {
+    enabled = true
+}
+
+bootJar {
+    mainClass = 'org.drad.movie_tickets.Application'
+    archiveFileName = "${rootProject.name}.jar"
+    manifest {
+        attributes(
+                'Implementation-Title': "${rootProject.name}",
+                'Implementation-Version': project.property("version")
+        )
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs= ["src/main/java"]
+        }
+        resources {
+            srcDirs= ["src/main/resources"]
+        }
+    }
+}
+
+//openApiGenerate {
+//    generatorName = "spring"
+//    inputSpec = "$rootDir/docs/openapi/movie_tickets.yml".toString()
+//    outputDir = "$buildDir/generated".toString()
+//    apiPackage = "org.drad.movie_tickets.api"
+//    modelPackage = "org.drad.movie_tickets.model"
+//    configOptions = [
+//            dateLibrary: "java8"
+//    ]
+//}
+//
+//compileJava.dependsOn tasks.openApiGenerate
+
+processResources {
+    from "../version.properties"
+}
+
+repositories {
+    mavenCentral()
+}
+
+test {
+    useJUnitPlatform()
+}
