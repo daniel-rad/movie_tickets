@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class TeenTicketProcessor extends TicketProcessor<TeenTicket> {
     @Override
-    protected void applyDiscount(TeenTicket ticket) {
+    public void applyDiscount(TeenTicket ticket) {
         // not implemented - do nothing
     }
 

@@ -14,9 +14,9 @@ import lombok.Setter;
 @Setter
 public abstract class Ticket {
 
-    private Integer id;
-    private String type;
-    private BigDecimal price;
+    protected Integer id;
+    protected String type;
+    protected BigDecimal price;
 
     public abstract void applyDiscount(BigDecimal discount);
 

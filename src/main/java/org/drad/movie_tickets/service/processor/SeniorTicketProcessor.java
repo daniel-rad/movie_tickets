@@ -15,7 +15,7 @@ public class SeniorTicketProcessor extends TicketProcessor<SeniorTicket> {
     private BigDecimal discount;
 
     @Override
-    protected void applyDiscount(SeniorTicket ticket) {
+    public void applyDiscount(SeniorTicket ticket) {
         if (Objects.equals(discount, BigDecimal.ZERO)) {
             return;
         }

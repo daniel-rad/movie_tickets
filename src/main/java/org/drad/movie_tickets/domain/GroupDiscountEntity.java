@@ -11,6 +11,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,8 +25,10 @@ import lombok.Setter;
 @Entity
 @Table(name = "group_discounts")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @EqualsAndHashCode
 public class GroupDiscountEntity {
     @Id

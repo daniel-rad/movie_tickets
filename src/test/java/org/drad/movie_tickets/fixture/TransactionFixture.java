@@ -1,9 +1,12 @@
 package org.drad.movie_tickets.fixture;
 
+import static org.drad.movie_tickets.fixture.TicketFixture.buildTicketResponseList;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import org.drad.movie_tickets.domain.GroupDiscountEntity;
 import org.drad.movie_tickets.model.Customer;
 import org.drad.movie_tickets.model.TransactionRequest;
 import org.drad.movie_tickets.model.TransactionResponse;
@@ -57,13 +60,7 @@ public class TransactionFixture {
               .build();
     }
 
-    public static List<TicketResponse> buildTicketResponseList() {
-        List<TicketResponse> tickets = new ArrayList<>();
-
-        tickets.add(TicketResponse.builder().ticketType("Adult").quantity(1).totalCostAmount(new BigDecimal("25.00")).build());
-        tickets.add(TicketResponse.builder().ticketType("Children").quantity(1).totalCostAmount(new BigDecimal("5.00")).build());
-        tickets.add(TicketResponse.builder().ticketType("Senior").quantity(1).totalCostAmount(new BigDecimal("17.50")).build());
-        tickets.add(TicketResponse.builder().ticketType("Teen").quantity(1).totalCostAmount(new BigDecimal("12.00")).build());
-        return tickets;
+    public static GroupDiscountEntity buildGroupDiscountEntity(Integer ticketId) {
+        return GroupDiscountEntity.builder().ticketId(ticketId).minQuantity(3).discount(new BigDecimal("25")).build();
     }
 }

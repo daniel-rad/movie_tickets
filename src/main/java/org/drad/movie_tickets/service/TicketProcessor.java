@@ -12,7 +12,7 @@ public abstract class TicketProcessor<T extends Ticket> {
      * Applies the discount specific to the fiven ticket type.
      *
      */
-    protected abstract void applyDiscount(T ticket);
+    public abstract void applyDiscount(T ticket);
 
     /**
      * Returns the ticket type. Processors will update the ticket type for which they are responsible to process.
